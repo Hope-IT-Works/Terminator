@@ -1,7 +1,7 @@
 !define BASE_INSTALL_DIR "$PROGRAMFILES64"
 !define PRODUCT_NAME "Terminator"
 !define PRODUCT_NAME_LOWER "terminator"
-!define PRODUCT_VERSION 1.3
+!define PRODUCT_VERSION 1.4
 !define PRODUCT_ABOUT "simple tool to kill processes"
 
 !define BASE_DIR "..\bin"
