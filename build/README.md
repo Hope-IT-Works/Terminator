@@ -3,7 +3,7 @@ What you need:
 - [ps2exe.ps1](https://github.com/MScholtes/Win-PS2EXE/blob/master/ps2exe.ps1)
 
 1. Clone this repository
-2. Get the file from above into this directory
+2. Get the file from above into this directory (build)
 3. Start PowerShell
 4. Navigate to this folder (build) and execute the following command:
 ```powershell
