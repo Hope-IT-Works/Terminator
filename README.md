@@ -3,3 +3,9 @@
 simple tool to kill processes
 
 **WARNING:** This tool kills processes forcefully, therefore stopping processes even if unsaved files are opened etc. Use at your own risk.
+
+## Download
+| Name | Description | OS | Arch | Download |
+| --- | --- | --- | --- | --- |
+| `terminator-portable-v1.3.exe` | Portable | Windows 10 or higher | x86 and x64 | [Download](https://github.com/Hope-IT-Works/Terminator/releases/download/v1.3/terminator-portable-v1.3.exe) |
+| `terminator-setup-v1.3.exe` | Setup | Windows 10 or higher | x86 and x64 | [Download](https://github.com/Hope-IT-Works/Terminator/releases/download/v1.3/terminator-setup-v1.3.exe) |
