@@ -1,4 +1,4 @@
-<# This form was created using POSHGUI.com  a free online gui designer for PowerShell
+﻿<# This form was created using POSHGUI.com a free online gui designer for PowerShell
 .NAME
     Terminator
 #>
@@ -6,97 +6,91 @@
 Add-Type -AssemblyName System.Windows.Forms
 [System.Windows.Forms.Application]::EnableVisualStyles()
 
-$Form                            = New-Object system.Windows.Forms.Form
-$Form.ClientSize                 = New-Object System.Drawing.Point(400,90)
-$Form.text                       = "Terminator"
-$Form.TopMost                    = $true
+$Form                       = New-Object System.Windows.Forms.Form
+$Form.ClientSize            = New-Object System.Drawing.Point(400,90)
+$Form.Text                  = "Terminator"
+$Form.TopMost               = $true
 
-$ComboBoxProzesse                = New-Object system.Windows.Forms.ComboBox
-$ComboBoxProzesse.width          = 370
-$ComboBoxProzesse.height         = 20
-$ComboBoxProzesse.location       = New-Object System.Drawing.Point(15,14)
-$ComboBoxProzesse.Font           = New-Object System.Drawing.Font('Microsoft Sans Serif',10)
+$ComboBoxProcesses          = New-Object System.Windows.Forms.ComboBox
+$ComboBoxProcesses.width    = 370
+$ComboBoxProcesses.height   = 20
+$ComboBoxProcesses.location = New-Object System.Drawing.Point(15,14)
+$ComboBoxProcesses.Font     = New-Object System.Drawing.Font('Microsoft Sans Serif',10)
 
-$ButtonAktualisieren             = New-Object system.Windows.Forms.Button
-$ButtonAktualisieren.text        = "Aktualisieren"
-$ButtonAktualisieren.width       = 100
-$ButtonAktualisieren.height      = 30
-$ButtonAktualisieren.location    = New-Object System.Drawing.Point(210,45)
-$ButtonAktualisieren.Font        = New-Object System.Drawing.Font('Microsoft Sans Serif',10)
+$ButtonRefresh              = New-Object System.Windows.Forms.Button
+$ButtonRefresh.text         = "Refresh"
+$ButtonRefresh.width        = 100
+$ButtonRefresh.height       = 30
+$ButtonRefresh.location     = New-Object System.Drawing.Point(210,45)
+$ButtonRefresh.Font         = New-Object System.Drawing.Font('Microsoft Sans Serif',10)
 
-$ButtonBeenden                   = New-Object system.Windows.Forms.Button
-$ButtonBeenden.text              = "Beenden"
-$ButtonBeenden.width             = 70
-$ButtonBeenden.height            = 30
-$ButtonBeenden.location          = New-Object System.Drawing.Point(315,45)
-$ButtonBeenden.Font              = New-Object System.Drawing.Font('Microsoft Sans Serif',10)
+$ButtonClose                = New-Object System.Windows.Forms.Button
+$ButtonClose.text           = "Kill"
+$ButtonClose.width          = 70
+$ButtonClose.height         = 30
+$ButtonClose.location       = New-Object System.Drawing.Point(315,45)
+$ButtonClose.Font           = New-Object System.Drawing.Font('Microsoft Sans Serif',10)
 
-$LabelInformation                = New-Object system.Windows.Forms.Label
-$LabelInformation.text           = "Version 1.1.0.0`n© Tobias Meyer"
-$LabelInformation.AutoSize       = $true
-$LabelInformation.width          = 25
-$LabelInformation.height         = 10
-$LabelInformation.location       = New-Object System.Drawing.Point(15,45)
-$LabelInformation.Font           = New-Object System.Drawing.Font('Microsoft Sans Serif',10)
-$LabelInformation.ForeColor      = [System.Drawing.ColorTranslator]::FromHtml("#4a4a4a")
+$LabelInformation           = New-Object System.Windows.Forms.Label
+$LabelInformation.text      = "Version 1.3`n© Tobias Meyer"
+$LabelInformation.AutoSize  = $true
+$LabelInformation.width     = 25
+$LabelInformation.height    = 10
+$LabelInformation.location  = New-Object System.Drawing.Point(15,45)
+$LabelInformation.Font      = New-Object System.Drawing.Font('Microsoft Sans Serif',10)
+$LabelInformation.ForeColor = [System.Drawing.ColorTranslator]::FromHtml("#4a4a4a")
 
-$Form.controls.AddRange(@($ComboBoxProzesse,$ButtonAktualisieren,$ButtonBeenden,$LabelInformation))
+$Form.controls.AddRange(@($ComboBoxProcesses,$ButtonRefresh,$ButtonClose,$LabelInformation))
 
-$ButtonAktualisieren.Add_Click({ Prozesse-Aktualisieren })
-$ButtonBeenden.Add_Click({ Prozess-Beenden })
+$ButtonRefresh.Add_Click({ Get-TerminatorProcess })
+$ButtonClose.Add_Click({ Stop-TerminatorProcess })
 
 #Advanced Styling
-    $Form.ShowIcon                       = $false
-    $Form.MaximizeBox                    = $false
-    $Form.StartPosition                  = "CenterScreen"
-    $Form.FormBorderStyle                = [System.Windows.Forms.FormBorderStyle]::FixedDialog
-    $ComboBoxProzesse.AutoCompleteMode   = [System.Windows.Forms.AutoCompleteMode]::SuggestAppend
-    $ComboBoxProzesse.AutoCompleteSource = [System.Windows.Forms.AutoCompleteSource]::CustomSource
-    $ComboBoxProzesse.ContextMenu        = New-Object System.Windows.Forms.ContextMenu
+    $Form.ShowIcon                        = $false
+    $Form.MaximizeBox                     = $false
+    $Form.StartPosition                   = "CenterScreen"
+    $Form.FormBorderStyle                 = [System.Windows.Forms.FormBorderStyle]::FixedDialog
+    $ComboBoxProcesses.AutoCompleteMode   = [System.Windows.Forms.AutoCompleteMode]::SuggestAppend
+    $ComboBoxProcesses.AutoCompleteSource = [System.Windows.Forms.AutoCompleteSource]::CustomSource
+    $ComboBoxProcesses.ContextMenu        = New-Object System.Windows.Forms.ContextMenu
 
-
-function Prozess-Beenden {
-    $Prozess = $ComboBoxProzesse.SelectedItem
-    foreach($ProzessEintrag in $Prozesse) {
-        Write-Host -ForegroundColor Yellow $ProzessEintrag
-        if($ProzessEintrag -eq $Prozess) {
-            $Abfrage = [System.Windows.Forms.MessageBox]::Show("Soll $Prozess beendet werden?","Target Verification",4,[System.Windows.Forms.MessageBoxIcon]::Question)
-            if($Abfrage -eq "Yes") {
-                Stop-Process -Name $ComboBoxProzesse.SelectedItem -Force
-                Prozesse-Aktualisieren
-                $ComboBoxProzesse.Text = ""
-            } elseif($Abfrage -eq "No") {
-                Prozesse-Aktualisieren
-                $ComboBoxProzesse.Text = ""
+function Stop-TerminatorProcess {
+    $Process = $ComboBoxProcesses.SelectedItem
+    foreach($ProcessEntry in $Processes) {
+        if($ProcessEntry -eq $Process) {
+            $Query = [System.Windows.Forms.MessageBox]::Show("Should $Process be terminated?","Target Verification",4,[System.Windows.Forms.MessageBoxIcon]::Question)
+            if($Query -eq "Yes") {
+                Stop-Process -Name $ComboBoxProcesses.SelectedItem -Force -ErrorAction 'SilentlyContinue'
+                Get-TerminatorProcess
+                $ComboBoxProcesses.Text = ""
+            } elseif($Query -eq "No") {
+                Get-TerminatorProcess
+                $ComboBoxProcesses.Text = ""
             }
             return
         } else {
-            $NichtGefunden = $true
+            $ProcessNotFound = $true
         }
     }
-    if($true -eq $NichtGefunden) {
-        return [void] [System.Windows.Forms.MessageBox]::Show("Kein Prozess ausgewählt!","Target Verification",0,[System.Windows.Forms.MessageBoxIcon]::Warning)
+    if($true -eq $ProcessNotFound) {
+        return [void] [System.Windows.Forms.MessageBox]::Show("No Process selected!","Target Verification",0,[System.Windows.Forms.MessageBoxIcon]::Warning)
     }
-    Prozesse-Aktualisieren
+    Get-TerminatorProcess
 }
 
-function Prozesse-Aktualisieren {
-    $Prozesse = (Get-Process).Name | Select-Object -Unique
-    Set-Variable -Name "Prozesse" -Scope global
-    $ComboBoxProzesse.Items.Clear()
-    foreach($Prozess in $Prozesse) {
-        [void] $ComboBoxProzesse.Items.Add($Prozess)
+function Get-TerminatorProcess([Switch]$Init) {
+    Set-Variable -Name "Processes" -Scope global
+    $global:Processes = (Get-Process).Name | Select-Object -Unique
+    $ComboBoxProcesses.Items.Clear()
+    foreach($Process in $Processes) {
+        [void] $ComboBoxProcesses.Items.Add($Process)
     }
-    $ComboBoxProzesse.AutoCompleteCustomSource.Clear()
-    $ComboBoxProzesse.AutoCompleteCustomSource.AddRange(($Prozesse))
+    if($true -eq $Init){
+        $ComboBoxProcesses.AutoCompleteCustomSource.Clear()
+    }
+    $ComboBoxProcesses.AutoCompleteCustomSource.AddRange($Processes)
 }
 
 #Initial Listing
-    $Prozesse = (Get-Process).Name | Select-Object -Unique
-    Set-Variable -Name "Prozesse" -Scope global
-    $ComboBoxProzesse.Items.Clear()
-    foreach($Prozess in $Prozesse) {
-        [void] $ComboBoxProzesse.Items.Add($Prozess)
-    }
-    $ComboBoxProzesse.AutoCompleteCustomSource.AddRange(($Prozesse))
+Get-TerminatorProcess -Init
 [void]$Form.ShowDialog()
