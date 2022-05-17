@@ -7,5 +7,5 @@ simple tool to kill processes
 ## Download
 | Name | Description | OS | Arch | Download |
 | --- | --- | --- | --- | --- |
-| `terminator-portable-v1.3.exe` | Portable | Windows 10 or higher | x86 and x64 | [Download](https://github.com/Hope-IT-Works/Terminator/releases/download/v1.3/terminator-portable-v1.3.exe) |
-| `terminator-setup-v1.3.exe` | Setup | Windows 10 or higher | x86 and x64 | [Download](https://github.com/Hope-IT-Works/Terminator/releases/download/v1.3/terminator-setup-v1.3.exe) |
+| `terminator-portable-v1.4.exe` | Portable | Windows 10 or higher | x86 and x64 | [Download](https://github.com/Hope-IT-Works/Terminator/releases/download/v1.4/terminator-portable-v1.4.exe) |
+| `terminator-setup-v1.4.exe` | Setup | Windows 10 or higher | x86 and x64 | [Download](https://github.com/Hope-IT-Works/Terminator/releases/download/v1.4/terminator-setup-v1.4.exe) |
