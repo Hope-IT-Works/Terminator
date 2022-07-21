@@ -32,7 +32,7 @@ $ButtonClose.location       = New-Object System.Drawing.Point(315,45)
 $ButtonClose.Font           = New-Object System.Drawing.Font('Microsoft Sans Serif',10)
 
 $LabelInformation           = New-Object System.Windows.Forms.Label
-$LabelInformation.text      = "Version 1.3`n© Tobias Meyer"
+$LabelInformation.text      = "Version 1.5`n© Tobias Meyer"
 $LabelInformation.AutoSize  = $true
 $LabelInformation.width     = 25
 $LabelInformation.height    = 10
