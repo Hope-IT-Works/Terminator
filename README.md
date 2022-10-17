@@ -4,6 +4,8 @@ simple tool to kill processes
 
 **WARNING:** This tool kills processes forcefully, therefore stopping processes even if unsaved files are opened etc. Use at your own risk.
 
+_Major refactoring soon!_
+
 ## Download
 | Name | Description | OS | Arch | Download |
 | --- | --- | --- | --- | --- |
